@@ -14,11 +14,11 @@ class Scheduler(object):
         self._outputer = HtmlOutputer()
 
     def start(self):
-        count = 0
+        count = 1
 
         while self._url.hasNext():
             new_url = self._url.getNext()
-            print 'new url: ' + new_url
+            print 'while_count: %s' % count
 
             html_content = self._spider.crawl(new_url)
             new_urls, new_data = self._parser.parse(new_url, html_content)
@@ -30,7 +30,7 @@ class Scheduler(object):
 
             count += 1
 
-            if count == crawl_count:
+            if count > crawl_count:
                 break
 
         self._outputer.output()
@@ -39,7 +39,3 @@ class Scheduler(object):
 if __name__ == '__main__':
     obj_spider = Scheduler()
     obj_spider.start()
-
-
-
-
